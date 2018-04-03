@@ -12,15 +12,21 @@ variable aws_wos_prod       { }
 variable bucket_policy_tmpl { }
 
 resource "aws_s3_bucket" "build-tools" {
-    bucket = "clarivate.${var.app}.${var.env}.${var.region}.build-tools" 
-    acl = "private"
-    force_destroy = true
-    tags {
-
-        Owner       = "WOS-DevOps"
-        Environment = "${var.env}"
-        User        = "${var.user}"
+  bucket = "clarivate.${var.app}.${var.env}.${var.region}.build-tools" 
+  acl = "private"
+  force_destroy = true
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
     }
+  }
+  tags {
+    Owner       = "WOS-DevOps"
+    Environment = "${var.env}"
+    User        = "${var.user}"
+  }
 }
 
 data "template_file" "bucket_policy" {
