@@ -22,7 +22,7 @@ data "template_file" "bucket_policy" {
 }
 
 resource "aws_s3_bucket" "build-tools" {
-  bucket = "clarivate.${var.app}.${var.env}.${var.region}.build-tools" 
+  bucket = "clarivate.${var.app}.${terraform.workspace}.${var.region}.build-tools" 
   acl = "private"
   force_destroy = true
 
@@ -51,7 +51,7 @@ resource "aws_s3_bucket" "build-tools" {
 
   tags {
     Owner       = "WOS-DevOps"
-    Environment = "${var.env}"
+    Environment = "${terraform.workspace}"
     User        = "${var.user}"
   }
 }
