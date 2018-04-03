@@ -1,0 +1,43 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AddCannedAcl",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": [
+              "arn:aws:iam::996733901146:root",
+              "arn:aws:iam::078897461510:root"
+          ]
+      },
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": "arn:aws:s3:::clarivate.wos.dev.us-east-1.build-tools/*",
+      "Condition": {
+        "StringEquals": {
+            "s3:x-amz-acl": "bucket-owner-full-control"
+        }
+      }
+    },
+    {
+      "Sid": "ListBucket",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": [
+              "arn:aws:iam::996733901146:root",
+              "arn:aws:iam::078897461510:root"
+          ]
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject"
+      ],
+      "Resource":[
+        "arn:aws:s3:::clarivate.wos.dev.us-east-1.build-tools/*",
+        "arn:aws:s3:::clarivate.wos.dev.us-east-1.build-tools"
+      ]
+    } 
+  ]
+}
