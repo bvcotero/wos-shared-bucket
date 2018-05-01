@@ -7,6 +7,6 @@ variable "env"        { default = "dev" }
 
 provider "aws" {
   region    = "${var.region}"
-  profile   = "wos-${terraform.workspace}"
+  profile   = "wos-${var.env}"
 }
 
