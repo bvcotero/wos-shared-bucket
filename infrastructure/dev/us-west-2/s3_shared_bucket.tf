@@ -12,12 +12,22 @@ variable aws_wos_prod       { }
 variable snapshots_prefix   { }
 variable bucket_policy_tmpl { }
 
+data "aws_iam_role" "lambda_execution_role" {
+  name = "batch_service_batch_scheduler_lambda_dev-u6047692_ExecutionRole"
+}
+
+data "aws_iam_role" "batch_instance_role" {
+  name = "batch_service_wos_dev-u6047692_InstanceRole"
+}
+
 data "template_file" "bucket_policy" {
   template = "${ file( "${ var.bucket_policy_tmpl }" ) }"
   vars {
-    bucket_name      = "${aws_s3_bucket.build-tools.id}"
-    aws_account_dev  = "${var.aws_wos_dev}"
-    aws_account_prod = "${var.aws_wos_prod}"
+    bucket_name          = "${aws_s3_bucket.build-tools.id}"
+    aws_account_dev      = "${var.aws_wos_dev}"
+    aws_account_prod     = "${var.aws_wos_prod}"
+    lambda_exec_role_arn = "${data.aws_iam_role.lambda_execution_role.arn}"
+    batch_instance_role  = "${data.aws_iam_role.batch_instance_role.arn}"
   }
 }
 

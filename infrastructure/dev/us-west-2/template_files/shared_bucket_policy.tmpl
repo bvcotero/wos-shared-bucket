@@ -38,6 +38,25 @@
         "arn:aws:s3:::${bucket_name}/*",
         "arn:aws:s3:::${bucket_name}"
       ]
-    } 
+    },
+    {
+      "Sid": "ListBucket",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": [
+          "${lambda_exec_role_arn}",
+          "${batch_instance_role}"
+          ]
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource":[
+        "arn:aws:s3:::${bucket_name}/*",
+        "arn:aws:s3:::${bucket_name}"
+      ]
+    }   
   ]
 }
